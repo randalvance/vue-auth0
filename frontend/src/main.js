@@ -7,7 +7,6 @@ import { domain, clientId } from "../auth_config.json";
 Vue.use(Auth0Plugin, {
   domain,
   clientId,
-  audience: 'resume-builder-api',
   onRedirectCallback: appState => {
     router.push(
       appState && appState.targetUrl

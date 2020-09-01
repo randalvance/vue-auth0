@@ -22,9 +22,9 @@ app.use(cors());
 app.use(jwtCheck);
 
 app.get('/authorized', function (req, res) {
-    res.send('Secured Resource');
+    res.json({ message: 'Response from Secured Backend'});
 });
 
 app.listen(port, () => {
-    console.log("Running at port " + port);
+    console.log('Running at port ' + port);
 });
