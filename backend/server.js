@@ -1,12 +1,15 @@
-var express = require('express');
-var cors = require('cors');
-var app = express();
-var jwt = require('express-jwt');
-var jwks = require('jwks-rsa');
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+const jwtAuthz = require('express-jwt-authz');
 
-var port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
-var jwtCheck = jwt({
+const checkScopes = jwtAuthz([ 'read:resource' ]);
+
+const jwtCheck = jwt({
       secret: jwks.expressJwtSecret({
           cache: true,
           rateLimit: true,
@@ -21,7 +24,7 @@ var jwtCheck = jwt({
 app.use(cors());
 app.use(jwtCheck);
 
-app.get('/authorized', function (req, res) {
+app.get('/authorized', checkScopes, function (req, res) {
     res.json({ message: 'Response from Secured Backend'});
 });
 

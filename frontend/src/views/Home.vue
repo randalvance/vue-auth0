@@ -26,7 +26,7 @@ export default {
   methods: {
     // Log the user in
     login() {
-      this.$auth.loginWithRedirect();
+      this.$auth.loginWithRedirect({ audience: 'resume-builder-api',  scope: 'read:resource', });
     },
     // Log the user out
     logout() {
@@ -37,7 +37,7 @@ export default {
     async callApi() {
       this.loadingFromApi = true;
       try {
-      const accessToken = await this.$auth.getTokenSilently({ audience: 'resume-builder-api' });
+      const accessToken = await this.$auth.getTokenSilently({ audience: 'resume-builder-api',  scope: 'read:resource', });
       const response = await fetch('http://localhost:8080/authorized', {
         headers: new Headers({
           'Authorization': `Bearer ${accessToken}`, 
